@@ -7,6 +7,7 @@ use App\Manager\ArticleManager;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
 {
@@ -21,12 +22,33 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
+        //Récupérer tous les articles
+        //$articles = Article::all();
 
+        //Article avec pagination
         $articles = Article::paginate(7);
+
+        //Trouver un article avec un id
+        //$articles = Article::find(1);
+
+        //Trouver un article avec un id ou envoyer une 404
+        //$articles = Article::findOrFail(1);
+
+        //Trouver un article en utilisant une autre colonne
+        //$articles = Article::where('title', 'Nemo qui temporibus enim')->first();
+
+        //Trouver un article en utilisant une autre colonne ou envoyer une 404
+        //$articles = Article::where('title', 'Nemo qui temporibus enim')->firstOrFail();
+
+        //----------------------QUERY BUILDER------------------------//
+        //SELECT:
+        //$articles = DB::select('SELECT * from articles');
+        
+        //$articles = DB::select('SELECT * from articles WHERE id = 7');
 
         return view ('article.index', [
             'articles' => $articles
@@ -36,7 +58,7 @@ class ArticleController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
@@ -49,7 +71,7 @@ class ArticleController extends Controller
      * Store a newly created resource in storage.
      *
      * @param ArticleRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(ArticleRequest $request)
     {
@@ -71,7 +93,7 @@ class ArticleController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Article $article)
     {
@@ -86,7 +108,7 @@ class ArticleController extends Controller
      *
      * @param ArticleRequest $request
      * @param Article $article
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ArticleRequest $request, Article $article)
     {
@@ -107,7 +129,7 @@ class ArticleController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function delete(Article $article)
     {
