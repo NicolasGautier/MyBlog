@@ -27,10 +27,10 @@ class MainController extends Controller
     public function index(){
 
         //Article avec pagination
-        //$articles = Article::paginate(4);
+        $articles = Article::paginate(4);
 
         //Récupérer tous les articles
-        //$articles = Article::all();
+        // $articles = Article::all();
 
         //Trouver un article avec un id
         //$articles = Article::find(1);
@@ -79,12 +79,54 @@ class MainController extends Controller
         //       ->get();
 
         //QB recherche des posts créés entre aujourd'hui et il y a tant de jours
-        $articles = DB::table('articles')
-              ->select('created_at', 'id')
-              ->where('created_at', '>', now()->subDays(17))
-              ->get();
+        // $articles = DB::table('articles')
+        //       ->select('created_at', 'id')
+        //       ->where('created_at', '>', now()->subDays(17))
+        //       ->get();
 
-        dd($articles );
+        //LEFT JOIN (renvoie une valeur même si nul) Ce qui est entre parenthèses, c'est ce qu'il y a dans la bdd
+        // $articles = Article::leftJoin('categories', 'categories.id', '=', 'articles.category_id')
+        //                     ->select('articles.title as title', 'categories.label as label')
+        //                     ->get();       
+        
+        // $articles = Article::leftJoin('categories', 'categories.id', '=', 'articles.category_id')
+        //                     ->select('articles.*')
+        //                     ->get();       
+                            
+        //équivalent en select = select `articles`.* from `articles` left join `categories` on `categories.id` = `articles.category_id`;
+        
+
+        //jointure multiple en ELOQUENT
+        // $users = DB::table('users')
+        //     ->join('contacts', 'users.id', '=', 'contacts.user_id')
+        //     ->join('orders', 'users.id', '=', 'orders.user_id')
+        //     ->select('users.*', 'contacts.phone', 'orders.price')
+        //     ->get();
+
+        //jointures multiples en SQL
+        
+        // SELECT
+        // i.num AS num,
+        // i.title AS info,
+        // i.total AS total,
+        // client.name AS client,
+        // i.inv_date AS date_facture,
+        // i.payment AS date_paiement
+        // FROM invoice AS i
+        // INNER JOIN  quote ON i.quote_id = quote.id
+        // INNER JOIN  project ON quote.project_id = project.id
+        // INNER JOIN client ON project.client_id = client.id
+
+        //sous requêtes Eloquent
+//         $latestPosts = DB::table('posts')
+//                    ->select('user_id', DB::raw('MAX(created_at) as last_post_created_at'))
+//                    ->where('is_published', true)
+//                    ->groupBy('user_id');
+
+// $users = DB::table('users')
+//         ->joinSub($latestPosts, 'latest_posts', function ($join) {
+//             $join->on('users.id', '=', 'latest_posts.user_id');
+//         })->get();
 
         return view('articles', [
             'articles' => $articles
