@@ -12,7 +12,7 @@ A classic blog built with laravel 8, blade and mysql.
 
 <h2>Demo</h2>
 
-
+![myblogdemo](https://user-images.githubusercontent.com/91179295/155854556-9784e956-e186-427e-84c7-3381bf9b05d2.gif)
     
 <h2>Features</h2>
 The application is a simple blog.
